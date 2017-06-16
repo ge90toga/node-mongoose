@@ -1,12 +1,32 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-// define a schema
-const UserSchema = new Schema({
-   name: String // js string type
+// define a schema (NOT a model)
+const PostSchema = new Schema({
+    title: String
 });
-// create user collection automatically if not exist
-const User = mongoose.model('user', UserSchema); // represent the entire collection
 
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        validate: {
+            validator: (name) => name.length > 2,
+            message: 'Name must be longer than 2 characters.'
+        },
+        required: [true, 'Name is required.']
+    },
+    posts: [PostSchema],
+    likes: Number,
+    blogPosts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'blogPost'
+    }]
+});
+
+UserSchema.virtual('postCount').get(function () {
+    return this.posts.length;
+});
+
+// use UserSchema to define user model
+const User = mongoose.model('user', UserSchema);
 
 module.exports = User;

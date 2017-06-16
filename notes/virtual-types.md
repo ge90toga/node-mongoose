@@ -25,7 +25,7 @@ UserSchema.virtual('postCount').get(function() {
 - We use es6 getter to help us doing this:
 ![es6-getters](../note-images/es6-getters.png)
 
-```
+```js
 // when calling user.postCount, it will call this get function for us.
 // even though we did not use (). Note it has to be function rather than
 // arrow function.
