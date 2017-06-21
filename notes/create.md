@@ -18,3 +18,4 @@ module.exports = mongoose;
 ```
 
 ### create a schema
+schema -> model
